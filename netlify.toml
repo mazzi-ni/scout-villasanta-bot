@@ -5,7 +5,7 @@
   publish = ""
 
 [functions]
-  external_node_modules = ["telegraf"]
+  external_node_modules = ["telegraf, axios"]
   node_bundler = "esbuild"
 
 [[redirects]]

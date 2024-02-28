@@ -1,43 +1,31 @@
-import { Telegraf } from 'telegraf'
-import { message } from 'telegraf/filters'
+import { Telegraf } from "telegraf";
+import { message } from "telegraf/filters";
+import dotenv from "dotenv";
+dotenv.config();
 
-const bot = new Telegraf(process.env.BOT_TOKEN)
+const bot = new Telegraf(process.env.BOT_TOKEN);
 
-bot.command('quit', async (ctx) => {
-  // Explicit usage
-  await ctx.telegram.leaveChat(ctx.message.chat.id)
+// bot.command("branca", (ctx) => {});
 
-  // Using context shortcut
-  await ctx.leaveChat()
-})
+bot.command("quit", async (ctx) => {
+  await ctx.telegram.leaveChat(ctx.message.chat.id);
+  await ctx.leaveChat();
+});
 
-bot.on(message('text'), async (ctx) => {
-  // Explicit usage
-  await ctx.telegram.sendMessage(ctx.message.chat.id, `Hello ${ctx.state.role}`)
 
-  // Using context shortcut
-  await ctx.reply(`Hello ${ctx.state.role}`)
-})
+// local ?
+bot.launch();
 
-bot.on('callback_query', async (ctx) => {
-  // Explicit usage
-  await ctx.telegram.answerCbQuery(ctx.callbackQuery.id)
+process.once("SIGINT", () => bot.stop("SIGINT"));
+process.once("SIGTERM", () => bot.stop("SIGTERM"));
 
-  // Using context shortcut
-  await ctx.answerCbQuery()
-})
-
-bot.on('inline_query', async (ctx) => {
-  const result = []
-  // Explicit usage
-  await ctx.telegram.answerInlineQuery(ctx.inlineQuery.id, result)
-
-  // Using context shortcut
-  await ctx.answerInlineQuery(result)
-})
-
-bot.launch()
-
-// Enable graceful stop
-process.once('SIGINT', () => bot.stop('SIGINT'))
-process.once('SIGTERM', () => bot.stop('SIGTERM'))
+// functions:
+// exports.handler = async event => {
+//   try {
+//     await bot.handleUpdate(JSON.parse(event.body))
+//     return { statusCode: 200, body: "" }
+//   } catch (e) {
+//     console.error("error in handler:", e)
+//     return { statusCode: 400, body: "This endpoint is meant for bot and telegram communication" }
+//   }
+// }
