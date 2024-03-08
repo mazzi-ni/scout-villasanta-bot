@@ -25,7 +25,6 @@ type Album = {
 const bot = new Telegraf(process.env.BOT_TOKEN);
 const album_regex = /https:\/\/photos\.app\.goo\.gl\/[A-Za-z0-9]+/i;
 const fetch_album_url = "https://fetch-google-album.netlify.app/api/";
-var branca: EBranca = EBranca.EG;
 var album: Album;
 
 bot.command("quit", async (ctx) => {
@@ -37,7 +36,7 @@ bot.hears(album_regex, (ctx) => {
   let id = ctx.message.text.replace("https://photos.app.goo.gl/", "");
 
   let images: string[] = [];
-  let cover_link: string;
+  // let cover_link: string;
   let today = new Date();
   let new_album: Album = {
     name: "",
@@ -116,18 +115,18 @@ bot.action("confirm", (ctx) => {
 });
 
 // local ?
-bot.launch();
+// bot.launch();
 
-process.once("SIGINT", () => bot.stop("SIGINT"));
-process.once("SIGTERM", () => bot.stop("SIGTERM"));
+// process.once("SIGINT", () => bot.stop("SIGINT"));
+// process.once("SIGTERM", () => bot.stop("SIGTERM"));
 
 // functions:
-// exports.handler = async event => {
-//   try {
-//     await bot.handleUpdate(JSON.parse(event.body))
-//     return { statusCode: 200, body: "" }
-//   } catch (e) {
-//     console.error("error in handler:", e)
-//     return { statusCode: 400, body: "This endpoint is meant for bot and telegram communication" }
-//   }
-// }
+exports.handler = async event => {
+  try {
+    await bot.handleUpdate(JSON.parse(event.body))
+    return { statusCode: 200, body: "" }
+  } catch (e) {
+    console.error("error in handler:", e)
+    return { statusCode: 400, body: "This endpoint is meant for bot and telegram communication" }
+  }
+}
