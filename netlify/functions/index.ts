@@ -6,7 +6,7 @@ import axios from "axios";
 import dotenv from "dotenv";
 dotenv.config();
 
-export enum EBranca {
+enum EBranca {
   "LC" = "LC",
   "EG" = "EG",
   "RS" = "RS",
@@ -121,7 +121,7 @@ bot.action("confirm", (ctx) => {
 // process.once("SIGTERM", () => bot.stop("SIGTERM"));
 
 // functions:
-exports.handler = async event => {
+exports.handler = async (event: any) => {
   try {
     await bot.handleUpdate(JSON.parse(event.body))
     return { statusCode: 200, body: "" }
